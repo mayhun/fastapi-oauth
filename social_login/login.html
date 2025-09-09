@@ -37,6 +37,34 @@
 <body>
   <div class="login-container">
       <h2>Login</h2>
+      <!-- 기본 로그인 -->
+    <form id="local-login-form">
+        <div style="margin-bottom:10px; text-align:left">
+          <label for="email">Email</label><br>
+          <input type="email" id="email" name="email" required
+                style="width:100%; padding:8px; box-sizing:border-box;">
+        </div>
+  
+        <div style="margin-bottom:12px; text-align:left">
+          <label for="password">Password</label><br>
+          <input type="password" id="password" name="password" required
+                style="width:100%; padding:8px; box-sizing:border-box;">
+        </div>
+  
+        <!-- 버튼: 가운데 정렬 -->
+        <div style="display:flex; justify-content:center; align-items:center; gap:12px; margin-top:4px;">
+          <button type="submit"
+                  style="padding:8px 14px; border:none; background:#222; color:#fff; border-radius:6px; cursor:pointer;">
+            Sign in
+          </button>
+          <button type="button" id="signup-btn"
+                  style="padding:8px 14px; border:none; background:#222; color:#fff; border-radius:6px; cursor:pointer;">
+            Sign up
+          </button>
+        </div>
+      </form>
+      <hr style="margin:18px 0">
+
       <a href="#" class="login-btn" id="google-login">
           <img src="https://developers.google.com/identity/images/btn_google_signin_dark_normal_web.png" alt="Google Login"/>
       </a>
@@ -51,6 +79,40 @@
   </div>
 
   <script>
+    const API_BASE = 'http://localhost:8000';
+
+    // 공통 이동
+    function goMain(name) {
+        window.location.href = name
+        ? `/main.html?name=${encodeURIComponent(name)}`
+        : '/main.html';
+    }
+
+    // 일반 로그인: 성공 → main.html?name=..., 실패/에러 → main.html
+    document.getElementById('local-login-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value;
+
+        try {
+        const res = await fetch(`${API_BASE}/api/users/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
+        });
+
+        if (!res.ok) { goMain(null); return; }
+
+        const data = await res.json().catch(() => ({}));
+        const name = data?.name || data?.user_name || '';
+        goMain(name || null);
+        } catch {
+        goMain(null);
+        }
+    });
+
+    
     document.getElementById('google-login').addEventListener('click', function(event) {
         event.preventDefault();
 
