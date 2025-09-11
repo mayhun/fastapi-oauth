@@ -38,7 +38,7 @@
                 // 응답이 200인 경우 처리
                 if (data.message === 'oauth login successful' || data.message === 'oauth register successful') {
                     const userName = encodeURIComponent(data.name);  // 사용자 이름을 URL에 맞게 인코딩
-                    window.location.href = `http://localhost:5500/social_login/main.html?name=${userName}`;
+                    window.location.href = `http://localhost:5500/main.html?name=${userName}`;
                 } else {
                     // 실패 시 오류 처리
                     throw new Error('Unexpected response message');
@@ -47,16 +47,16 @@
             .catch((error) => {
                 console.error('Error:', error);
                 // 실패 시에도 main.html로 이동
-                window.location.href = `http://localhost:5500/social_login/main.html?error=${encodeURIComponent(error.message)}`;
+                window.location.href = `http://localhost:5500/main.html?error=${encodeURIComponent(error.message)}`;
             });
         } else if (error) {
             // error 파라미터가 있는 경우, 에러 처리
             console.error(`Error: ${error}, Description: ${errorDescription}`);
-            window.location.href = `http://localhost:5500/social_login/main.html?error=${encodeURIComponent(error)}&error_description=${encodeURIComponent(errorDescription)}`;
+            window.location.href = `http://localhost:5500/main.html?error=${encodeURIComponent(error)}&error_description=${encodeURIComponent(errorDescription)}`;
         } else {
             // code와 error가 모두 없는 경우, 기본 리디렉션
             console.error('No code or error found in URL');
-            window.location.href = 'http://localhost:5500/social_login/main.html';
+            window.location.href = 'http://localhost:5500/main.html';
         }
     };
     </script>

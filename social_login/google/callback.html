@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Naver OAuth Callback</title>
+    <title>Google OAuth Callback</title>
 </head>
 <body>
-    <h2>Processing Naver OAuth...</h2>
+    <h2>Processing Google OAuth...</h2>
 
     <script>
         window.onload = function() {
@@ -20,7 +20,7 @@
             
         if (code) {
             // 성공적으로 code를 추출한 경우, 서버로 전송
-            fetch('http://localhost:8000/api/oauth/naver', {
+            fetch('http://localhost:8000/api/oauth/google', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
