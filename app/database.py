@@ -4,7 +4,8 @@ from typing import AsyncGenerator
 import os
 
 # SQLite 
-DB_URL = "sqlite+aiosqlite:///./social_login.db"
+DB_URL = "sqlite+aiosqlite:////app/data/social_login.db"
+
 
 # Async Engine 생성
 engine = create_async_engine(DB_URL, echo=True, future=True)
