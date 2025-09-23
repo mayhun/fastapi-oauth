@@ -1,0 +1,28 @@
+version: "3.9"
+
+services:
+  web:                      # FastAPI
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    container_name: fastapi-oauth
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./.env
+    restart: unless-stopped
+    volumes:
+      - ./app/db:/app/data
+
+  static:                   # 정적 HTML (Nginx)
+    build:
+      context: ./social_login
+      dockerfile: Dockerfile
+    container_name: social-static
+    ports:
+      - "5500:80"
+    restart: unless-stopped
+
+networks:
+  default:
+    name: social-net
