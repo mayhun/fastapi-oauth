@@ -31,4 +31,4 @@ async def login(req: users_schema.UserForm, db: AsyncSession = Depends(get_db)):
     if not user or not crud.verify_password(req.password, user.hashed_pw):
         raise HTTPException(status_code=401, detail='Login failed')
     
-    return {'message': 'Login Success'}
+    return {'message': 'Login Success', 'name': user.user_name}
