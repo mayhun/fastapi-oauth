@@ -77,7 +77,6 @@ def auth_naver(code: str):
         # naver에 access token 요청
         token_url = f"https://nid.naver.com/oauth2.0/token?client_id={NAVER_CLIENT_ID}&client_secret={NAVER_SECRET}&code={code}&grant_type=authorization_code&state={STATE}"
         token_response = requests.post(token_url)
-        print(f'token_response:{token_response.text}')
         if token_response.status_code != 200:
             raise Exception
 
